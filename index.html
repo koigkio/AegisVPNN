@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AegisVPN - Secure Connection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #0A192F;
+            --secondary-dark: #112240;
+            --accent-blue: #64B5F6;
+            --accent-dark-blue: #1E3A8A;
+            --success-green: #10B981;
+            --danger-red: #EF4444;
+            --text-light: #E2E8F0;
+            --text-secondary: #94A3B8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a365d 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 36px;
+            color: var(--accent-blue);
+            text-shadow: 0 0 15px rgba(100, 181, 246, 0.5);
+        }
+        
+        .logo-text {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-blue), #38BDF8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #2D3748;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-title {
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #2D3748;
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.2);
+        }
+        
+        .status-container {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px solid #2D3748;
+        }
+        
+        .status-text {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .status-connected {
+            color: var(--success-green);
+        }
+        
+        .status-disconnected {
+            color: var(--danger-red);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-dark-blue), var(--accent-blue));
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #7F1D1D, var(--danger-red));
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid #2D3748;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .connection-visual {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 10px;
+        }
+        
+        .visual-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .endpoint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .endpoint i {
+            font-size: 28px;
+            color: var(--accent-blue);
+        }
+        
+        .dots {
+            flex: 1;
+            display: flex;
+            justify-content: space-around;
+            margin: 0 20px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2D3748;
+        }
+        
+        .dot.active {
+            background: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-shield-alt logo-icon"></i>
+                <h1 class="logo-text">AegisVPN</h1>
+            </div>
+            <p class="subtitle">Secure Black-Blue VPN Client</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-server"></i> VPN Configuration
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-globe"></i> Server Address</label>
+                <input type="text" id="server" placeholder="vpn.aegis.com" value="vpn.aegis.com">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-key"></i> Public Key</label>
+                <textarea id="publicKey" rows="3" placeholder="Enter server public key"></textarea>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Private Key</label>
+                <textarea id="privateKey" rows="3" placeholder="Enter your private key"></textarea>
+            </div>
+        </div>
+        
+        <div class="connection-visual">
+            <div class="visual-line">
+                <div class="endpoint">
+                    <i class="fas fa-laptop"></i>
+                    <span>Your PC</span>
+                </div>
+                <div class="dots" id="dots">
+                    <div class="dot" id="dot1"></div>
+                    <div class="dot" id="dot2"></div>
+                    <div class="dot" id="dot3"></div>
+                    <div class="dot" id="dot4"></div>
+                    <div class="dot" id="dot5"></div>
+                </div>
+                <div class="endpoint">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>AegisVPN</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-container">
+            <div class="status-text" id="statusText">
+                Status: <span class="status-disconnected">Disconnected</span>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="uploadSpeed">0</div>
+                    <div class="stat-label">Upload Kbps</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="downloadSpeed">0</div>
+                    <div class="stat-label">Download Kbps</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn-secondary" onclick="saveConfig()">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button class="btn-primary" onclick="connectVPN()" id="btnConnect">
+                <i class="fas fa-link"></i> Connect
+            </button>
+            <button class="btn-danger" onclick="disconnectVPN()" id="btnDisconnect" disabled>
+                <i class="fas fa-unlink"></i> Disconnect
+            </button>
+        </div>
+    </div>
+    
+   const { app, BrowserWindow } = require('electron');
+const path = require('path');
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 480,
+    height: 700,
+    minWidth: 400,
+    minHeight: 500,
+    backgroundColor: '#0A192F',
+    icon: path.join(__dirname, 'icon.ico'),
+    webPreferences: {
+      nodeIntegration: true,        // ВКЛЮЧИТЬ для доступа к require()
+      contextIsolation: false,      // ОТКЛЮЧИТЬ для работы с node
+      enableRemoteModule: true      // ВКЛЮЧИТЬ
+    },
+    show: true
+  });
+
+  // Загружаем index.html
+  win.loadFile('index.html');
+  
+  // Убираем стандартное меню
+  win.setMenu(null);
+  
+  // Открываем DevTools для отладки (можно закомментировать позже)
+  win.webContents.openDevTools();
+  
+  console.log('Window created successfully');
+}
+
+// Запускаем приложение
+app.whenReady().then(() => {
+  console.log('Electron app ready');
+  createWindow();
+});
+
+// Закрываем приложение на Windows/Linux когда все окна закрыты
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
+
+// Для MacOS: создаем окно если кликнули на иконку в доке
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+</body>
+</html>
